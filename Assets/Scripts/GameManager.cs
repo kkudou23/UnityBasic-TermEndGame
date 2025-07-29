@@ -16,10 +16,14 @@ public class GameManager : MonoBehaviour
     
     private List<QuestionData> selectedQuestions;
     private int currentQuestionIndex = 0;
+    private int[] difficultyCount = new int[5];
     private int[] correctCount = new int[5];
     private bool isLeftCorrect;
     private int questionCount = 3;
     private float startTime;
+
+    public GameObject[] lifeArray = new GameObject[3];
+    private int lifePoint = 3;
 
     void Start() {
         startTime = Time.time;
@@ -47,22 +51,26 @@ public class GameManager : MonoBehaviour
     void CheckAnswer(bool isCorrect)
     {
         var currentQuestion = selectedQuestions[currentQuestionIndex];
-        if (isCorrect)
-        {
+        if (isCorrect) {
             correctCount[currentQuestion.difficulty] += 1;
+        } else {
+            lifeArray[lifePoint-1].SetActive(false);
+            lifePoint--;
         }
         currentQuestionIndex++;
         ShowNextQuestion();
     }
 
     void ShowNextQuestion() {
-        if (currentQuestionIndex >= questionCount) {
+        if (lifePoint == 0 || currentQuestionIndex >= questionCount) {
             ShowResult();
             return;
         }
 
         var question = selectedQuestions[currentQuestionIndex];
         questionText.text = question.questionText;
+
+        difficultyCount[question.difficulty] += 1;
 
         int randomLeftRight = Random.Range(0, 2);
         if(randomLeftRight < 1) {
@@ -92,7 +100,12 @@ public class GameManager : MonoBehaviour
         ResultData.playTime = Time.time - startTime;
 
         for (int i = 0; i < 5; i++) {
+            ResultData.difficultyCount[i] = difficultyCount[i];
             ResultData.correctCount[i] = correctCount[i];
+        }
+
+        if (lifePoint == 0) {
+            ResultData.isGameOver = true;
         }
 
         SceneManager.LoadScene("ResultScene");
