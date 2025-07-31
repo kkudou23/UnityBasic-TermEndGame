@@ -11,95 +11,154 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI leftButtonText;
     public GameObject rightButton;
     public TextMeshProUGUI rightButtonText;
+    public TextMeshProUGUI questionNumberText;
 
     public QuestionDataList questionDataList;
-    
+
     private List<QuestionData> selectedQuestions;
     private int currentQuestionIndex = 0;
     private int[] difficultyCount = new int[5];
     private int[] correctCount = new int[5];
     private bool isLeftCorrect;
-    private int questionCount = 3;
+    private int questionCount;
     private float startTime;
 
     public GameObject[] lifeArray = new GameObject[3];
     private int lifePoint = 3;
 
-    void Start() {
+    public static class GameSettings
+    {
+        public static bool isEndlessMode = false;
+    }
+
+    void Start()
+    {
         startTime = Time.time;
-        selectedQuestions = GetRandomQuestions();
+
+        if (!GameSettings.isEndlessMode)
+        {
+            questionCount = 3;
+            selectedQuestions = GetRandomQuestions(questionCount);
+        }
+        else
+        {
+            questionCount = questionDataList.questions.Count;
+            selectedQuestions = GetRandomQuestions(questionCount);
+        }
+
         ShowNextQuestion();
     }
 
-
-    void Update() {
-        if(Input.GetKeyDown(KeyCode.LeftArrow)) {
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
             LeftButtonSelected();
-        } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
             RightButtonSelected();
         }
     }
 
-    public void LeftButtonSelected() {
+    public void LeftButtonSelected()
+    {
         CheckAnswer(isLeftCorrect);
     }
 
-    public void RightButtonSelected() {
+    public void RightButtonSelected()
+    {
         CheckAnswer(!isLeftCorrect);
     }
 
     void CheckAnswer(bool isCorrect)
     {
         var currentQuestion = selectedQuestions[currentQuestionIndex];
-        if (isCorrect) {
-            correctCount[currentQuestion.difficulty] += 1;
-        } else {
-            lifeArray[lifePoint-1].SetActive(false);
+        if (isCorrect)
+        {
+            correctCount[currentQuestion.difficulty]++;
+        }
+        else
+        {
             lifePoint--;
+            if (lifePoint >= 0 && lifePoint < lifeArray.Length)
+            {
+                lifeArray[lifePoint].SetActive(false);
+            }
         }
         currentQuestionIndex++;
         ShowNextQuestion();
     }
 
-    void ShowNextQuestion() {
-        if (lifePoint == 0 || currentQuestionIndex >= questionCount) {
+    void ShowNextQuestion()
+    {
+        if (lifePoint == 0 || (!GameSettings.isEndlessMode && currentQuestionIndex >= questionCount))
+        {
             ShowResult();
             return;
+        }
+
+        if (GameSettings.isEndlessMode && currentQuestionIndex >= selectedQuestions.Count)
+        {
+            var newQuestions = GetRandomQuestions(questionDataList.questions.Count);
+            selectedQuestions.AddRange(newQuestions);
         }
 
         var question = selectedQuestions[currentQuestionIndex];
         questionText.text = question.questionText;
 
-        difficultyCount[question.difficulty] += 1;
+        difficultyCount[question.difficulty]++;
 
         int randomLeftRight = Random.Range(0, 2);
-        if(randomLeftRight < 1) {
+        if (randomLeftRight == 0)
+        {
             leftButtonText.text = question.firstOption;
             rightButtonText.text = question.secondOption;
-            isLeftCorrect = (question.correctAnswer == question.firstOption) ? true : false;
-        } else {
+            isLeftCorrect = (question.correctAnswer == question.firstOption);
+        }
+        else
+        {
             leftButtonText.text = question.secondOption;
             rightButtonText.text = question.firstOption;
-            isLeftCorrect = (question.correctAnswer == question.secondOption) ? true : false;
+            isLeftCorrect = (question.correctAnswer == question.secondOption);
+        }
+
+        if (GameSettings.isEndlessMode)
+        {
+            questionNumberText.text = (currentQuestionIndex + 1).ToString();
+        }
+        else
+        {
+            questionNumberText.text = $"{currentQuestionIndex + 1} / {questionCount}";
         }
     }
 
-    List<QuestionData> GetRandomQuestions() {
-        var shuffledQuestion = new List<QuestionData>(questionDataList.questions);
-        for (int i = 0; i < questionCount; i++) {
-            int randomIndex = Random.Range(i, shuffledQuestion.Count);
-            var tmp = shuffledQuestion[i];
-            shuffledQuestion[i] = shuffledQuestion[randomIndex];
-            shuffledQuestion[randomIndex] = tmp;
+    List<QuestionData> GetRandomQuestions(int count)
+    {
+        var shuffledQuestions = new List<QuestionData>(questionDataList.questions);
+
+        for (int i = 0; i < shuffledQuestions.Count; i++)
+        {
+            int randomIndex = Random.Range(i, shuffledQuestions.Count);
+            var tmp = shuffledQuestions[i];
+            shuffledQuestions[i] = shuffledQuestions[randomIndex];
+            shuffledQuestions[randomIndex] = tmp;
         }
-        return shuffledQuestion.GetRange(0, questionCount);
+
+        if (count > shuffledQuestions.Count)
+        {
+            count = shuffledQuestions.Count;
+        }
+
+        return shuffledQuestions.GetRange(0, count);
     }
 
     void ShowResult()
     {
         ResultData.playTime = Time.time - startTime;
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < difficultyCount.Length; i++)
+        {
             ResultData.difficultyCount[i] = difficultyCount[i];
             ResultData.correctCount[i] = correctCount[i];
         }
@@ -109,6 +168,5 @@ public class GameManager : MonoBehaviour
         }
 
         SceneManager.LoadScene("ResultScene");
-
     }
 }
