@@ -16,6 +16,20 @@ public class SceneController : MonoBehaviour {
         SceneManager.LoadScene("ModeSelectScene");
     }
 
+    private void Update() {
+        if(SceneManager.GetActiveScene().name.Equals("ModeSelectScene"))
+        {
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                LoadNormalModeGame();
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                LoadEndlessModeGame();
+            }
+        }
+    }
+
     public void LoadNormalModeGame() {
         GameSettings.isEndlessMode = false;
         SceneManager.LoadScene("GameScene");

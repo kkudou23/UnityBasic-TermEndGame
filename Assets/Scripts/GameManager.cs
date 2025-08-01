@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviour
     public GameObject rightButton;
     public TextMeshProUGUI rightButtonText;
     public TextMeshProUGUI questionNumberText;
+    public Slider timeLimitSlider;
 
     public QuestionDataList questionDataList;
 
@@ -21,7 +23,10 @@ public class GameManager : MonoBehaviour
     private int[] correctCount = new int[5];
     private bool isLeftCorrect;
     private int questionCount;
-    private float startTime;
+
+    private float timeLimit = 5f;
+    private float minTimeLimit = 1f;
+    private Coroutine timerCoroutine;
 
     public GameObject[] lifeArray = new GameObject[3];
     private int lifePoint = 3;
@@ -33,8 +38,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        startTime = Time.time;
-
         if (!GameSettings.isEndlessMode)
         {
             questionCount = 3;
@@ -92,6 +95,8 @@ public class GameManager : MonoBehaviour
 
     void ShowNextQuestion()
     {
+        timeLimitSlider.value = 1f;
+
         if (lifePoint == 0 || (!GameSettings.isEndlessMode && currentQuestionIndex >= questionCount))
         {
             ShowResult();
@@ -131,6 +136,17 @@ public class GameManager : MonoBehaviour
         {
             questionNumberText.text = $"{currentQuestionIndex + 1} / {questionCount}";
         }
+
+        if (timerCoroutine != null)
+        {
+            StopCoroutine(timerCoroutine);
+        }
+        timerCoroutine = StartCoroutine(QuestionTimer());
+
+        timeLimit -= 0.1f;
+        if(GameSettings.isEndlessMode && timeLimit < minTimeLimit) {
+            timeLimit = minTimeLimit;
+        }
     }
 
     List<QuestionData> GetRandomQuestions(int count)
@@ -155,8 +171,6 @@ public class GameManager : MonoBehaviour
 
     void ShowResult()
     {
-        ResultData.playTime = Time.time - startTime;
-
         for (int i = 0; i < difficultyCount.Length; i++)
         {
             ResultData.difficultyCount[i] = difficultyCount[i];
@@ -168,5 +182,31 @@ public class GameManager : MonoBehaviour
         }
 
         SceneManager.LoadScene("ResultScene");
+    }
+
+    IEnumerator QuestionTimer() {
+        float elapsed = 0f;
+        while (elapsed < timeLimit) {
+            elapsed += Time.deltaTime;
+            timeLimitSlider.value = 1f - (elapsed / timeLimit);
+            yield return null;
+        }
+
+        lifePoint--;
+        if (lifePoint >= 0 && lifePoint < lifeArray.Length)
+        {
+            lifeArray[lifePoint].SetActive(false);
+        }
+
+        currentQuestionIndex++;
+
+        if (lifePoint == 0 || (!GameSettings.isEndlessMode && currentQuestionIndex >= questionCount))
+        {
+            ShowResult();
+        }
+        else
+        {
+            ShowNextQuestion();
+        }
     }
 }
