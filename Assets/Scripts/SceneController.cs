@@ -17,7 +17,15 @@ public class SceneController : MonoBehaviour {
     }
 
     private void Update() {
-        if(SceneManager.GetActiveScene().name.Equals("ModeSelectScene"))
+        if (SceneManager.GetActiveScene().name.Equals("HowToScene"))
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                SceneManager.LoadScene("ModeSelectScene");
+            }
+        }
+
+        if (SceneManager.GetActiveScene().name.Equals("ModeSelectScene"))
         {
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
@@ -32,11 +40,11 @@ public class SceneController : MonoBehaviour {
 
     public void LoadNormalModeGame() {
         GameSettings.isEndlessMode = false;
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("CountdownScene");
     }
 
     public void LoadEndlessModeGame() {
         GameSettings.isEndlessMode = true;
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("CountdownScene");
     }
 }

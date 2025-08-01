@@ -24,12 +24,16 @@ public class GameManager : MonoBehaviour
     private bool isLeftCorrect;
     private int questionCount;
 
+    private float startTime;
     private float timeLimit = 5f;
     private float minTimeLimit = 1f;
     private Coroutine timerCoroutine;
 
     public GameObject[] lifeArray = new GameObject[3];
     private int lifePoint = 3;
+
+    private int score = 0;
+    private float bonus = 0;
 
     public static class GameSettings
     {
@@ -38,6 +42,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        startTime = Time.time;
+
         if (!GameSettings.isEndlessMode)
         {
             questionCount = 3;
@@ -79,6 +85,7 @@ public class GameManager : MonoBehaviour
         var currentQuestion = selectedQuestions[currentQuestionIndex];
         if (isCorrect)
         {
+            score += (currentQuestion.difficulty + 1) * 100;
             correctCount[currentQuestion.difficulty]++;
         }
         else
@@ -171,6 +178,21 @@ public class GameManager : MonoBehaviour
 
     void ShowResult()
     {
+        ResultData.playTime = Time.time - startTime;
+
+        if (!GameSettings.isEndlessMode)
+        {
+            float maxTime = 30f;
+            bonus = Mathf.Max(0, (maxTime - ResultData.playTime)) * 10;
+            ResultData.bonusScore = Mathf.RoundToInt(bonus);
+        }
+        else
+        {
+            float survivalTime = ResultData.playTime;
+            bonus = survivalTime * 10;
+            ResultData.bonusScore = Mathf.RoundToInt(bonus);
+        }
+
         for (int i = 0; i < difficultyCount.Length; i++)
         {
             ResultData.difficultyCount[i] = difficultyCount[i];
@@ -181,6 +203,7 @@ public class GameManager : MonoBehaviour
             ResultData.isGameOver = true;
         }
 
+        ResultData.correctScore = score;
         SceneManager.LoadScene("ResultScene");
     }
 
