@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: bd71ca23d2edc944ab569f72484785c2
+guid: 31ccc1e0eeeef8640a8beefd65afd23e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1799311255166558893
-    second: speachBubble-image_0
+      213: -8869109729385265100
+    second: speachBubble_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -122,11 +122,24 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: speachBubble-image_0
+      name: speachBubble_0
       rect:
         serializedVersion: 2
         x: 4
@@ -141,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: da2a09cad0078f810800000000000000
-      internalID: 1799311255166558893
+      spriteID: 438c70211b79ae480800000000000000
+      internalID: -8869109729385265100
       vertices: []
       indices: 
       edges: []
@@ -161,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      speachBubble-image_0: 1799311255166558893
+      speachBubble_0: -8869109729385265100
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

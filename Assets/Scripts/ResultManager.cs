@@ -3,40 +3,42 @@ using UnityEngine;
 
 public class ResultManager : MonoBehaviour
 {
+    public TextMeshProUGUI systemText;
     public TextMeshProUGUI resultText;
+    public TextMeshProUGUI finalScoreText;
+    public TextMeshProUGUI messageText;
 
     void Start()
     {
-        int totalCorrectCount = 0;
-
-        resultText.text = $"せいかい スコア : {ResultData.correctScore}\n";
-        resultText.text += $"ボーナス スコア : {ResultData.bonusScore}\n";
-        resultText.text += $"さいしゅう スコア : {ResultData.correctScore + ResultData.bonusScore}\n";
-        resultText.text += $"クリアタイム : {ResultData.playTime:F2} びょう\n\n";
+        systemText.text = "";
+        resultText.text = "";
 
         for (int i = 0; i < ResultData.difficultyCount.Length; i++)
         {
-            resultText.text += $"なんいど{i + 1} : {ResultData.difficultyCount[i]} もんちゅう {ResultData.correctCount[i]} もんせいかい\n";
-            totalCorrectCount += ResultData.correctCount[i];
+            systemText.text += $"なんいど {i + 1} ({(i+1) * 100} P) * {ResultData.correctCount[i]} P\n";
+            resultText.text += $"{((i + 1) * 100) * ResultData.correctCount[i]} P\n";
         }
 
-        resultText.text += "\n";
+        systemText.text += $"クリアタイム ボーナス";
+        resultText.text += $"{ResultData.playTime:F2} びょう = {ResultData.bonusScore} P";
 
-        if (ResultData.playTime < 30f && totalCorrectCount >= 3)
+        finalScoreText.text = $"{ResultData.correctScore + ResultData.bonusScore} P";
+
+        if (ResultData.playTime < 10f)
         {
-            resultText.text += "さんもん いじょう せいかい";
+            messageText.text = "じゅう びょう いないに クリア";
         }
-        else if (ResultData.playTime < 60f && totalCorrectCount >= 2)
+        else if (ResultData.playTime < 30f)
         {
-            resultText.text += "にもん せいかい";
+            messageText.text = "さんじゅう びょう いないに クリア";
         }
-        else if (totalCorrectCount >= 1)
+        else if (ResultData.playTime < 60f)
         {
-            resultText.text += "いちもん せいかい";
+            messageText.text = "ろくじゅう びょう いないに クリア";
         }
         else
         {
-            resultText.text += "ぜんもん ふせいかい";
+            messageText.text = "ろくじゅう びょう いじょう かかった";
         }
     }
 }

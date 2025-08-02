@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c068a6ab3f9d1dd4c9233e90aaa19493
+guid: 43ef20fe6337cc94899bf13c8651c623
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5601778690881773324
-    second: biggerSpeachBubble-image_0
+      213: 3734348028994640829
+    second: resultSpeachBubble_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -122,11 +122,24 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: biggerSpeachBubble-image_0
+      name: resultSpeachBubble_0
       rect:
         serializedVersion: 2
         x: 9
@@ -141,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4f0a3abc5fb7242b0800000000000000
-      internalID: -5601778690881773324
+      spriteID: dbbd7e73fb113d330800000000000000
+      internalID: 3734348028994640829
       vertices: []
       indices: 
       edges: []
@@ -161,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      biggerSpeachBubble-image_0: -5601778690881773324
+      resultSpeachBubble_0: 3734348028994640829
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
