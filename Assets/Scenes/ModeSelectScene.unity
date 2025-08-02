@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 57502029}
   - component: {fileID: 57502031}
   - component: {fileID: 57502030}
+  - component: {fileID: 57502032}
   m_Layer: 5
   m_Name: Bird
   m_TagString: Untagged
@@ -194,6 +195,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 57502028}
   m_CullTransparentMesh: 1
+--- !u!95 &57502032
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57502028}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fc06fe1bdb85d8f4c8e39bad276aa7cb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &66469872
 GameObject:
   m_ObjectHideFlags: 0
@@ -889,6 +912,7 @@ MonoBehaviour:
   questionNumberText: {fileID: 0}
   timeLimitSlider: {fileID: 0}
   pausePanel: {fileID: 1277304992}
+  birdImage: {fileID: 0}
   questionDataList: {fileID: 0}
   lifeArray:
   - {fileID: 0}
@@ -2108,7 +2132,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 26dd663071884e4419b89363ca276558, type: 3}
     - target: {fileID: 4966136600610447303, guid: 906aee0b5431f428f862cd772c9c88d5, type: 3}
       propertyPath: DontDestroyOnLoadOnAwake
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

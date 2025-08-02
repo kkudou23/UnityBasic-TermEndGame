@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI questionNumberText;
     public Slider timeLimitSlider;
     public GameObject pausePanel;
+    public Image birdImage;
 
     public QuestionDataList questionDataList;
 
@@ -118,6 +119,16 @@ public class GameManager : MonoBehaviour
         else
         {
             SePlayer.Instance.Play(1);
+
+            for (int i = 0; i < lifePoint; i++)
+            {
+                var animator = lifeArray[i].GetComponent<Animator>();
+                if (animator != null)
+                {
+                    animator.SetTrigger("HeartShake");
+                }
+            }
+
             lifePoint--;
             if (lifePoint >= 0 && lifePoint < lifeArray.Length)
             {
@@ -190,6 +201,8 @@ public class GameManager : MonoBehaviour
                 questionNumberText.text = $"{currentQuestionIndex + 1} / {questionCount}";
             }
         }
+
+        birdImage.GetComponent<Animator>().SetTrigger("birdJump");
 
         timeLimit -= 0.1f;
         if (GameSettings.isEndlessMode && timeLimit < minTimeLimit)
@@ -285,6 +298,15 @@ public class GameManager : MonoBehaviour
         catch (OperationCanceledException)
         {
             return;
+        }
+
+        for (int i = 0; i < lifePoint; i++)
+        {
+            var animator = lifeArray[i].GetComponent<Animator>();
+            if (animator != null)
+            {
+                animator.SetTrigger("HeartShake");
+            }
         }
 
         lifePoint--;
