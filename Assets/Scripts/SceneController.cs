@@ -1,3 +1,4 @@
+using naichilab.EasySoundPlayer.Scripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static GameManager;
@@ -21,6 +22,7 @@ public class SceneController : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
+                SePlayer.Instance.Play(0);
                 SceneManager.LoadScene("ModeSelectScene");
             }
         }

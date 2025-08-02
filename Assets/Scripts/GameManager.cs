@@ -1,9 +1,11 @@
+using naichilab.EasySoundPlayer.Scripts;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Collections;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI rightButtonText;
     public TextMeshProUGUI questionNumberText;
     public Slider timeLimitSlider;
+    public GameObject pauseaPanel;
 
     public QuestionDataList questionDataList;
 
@@ -34,6 +37,8 @@ public class GameManager : MonoBehaviour
 
     private int score = 0;
     private float bonus = 0;
+
+    private bool isPaused = false;
 
     public static class GameSettings
     {
@@ -60,6 +65,11 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if(isPaused)
+        {
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             LeftButtonSelected();
@@ -72,11 +82,13 @@ public class GameManager : MonoBehaviour
 
     public void LeftButtonSelected()
     {
+        SePlayer.Instance.Play(0);
         CheckAnswer(isLeftCorrect);
     }
 
     public void RightButtonSelected()
     {
+        SePlayer.Instance.Play(0);
         CheckAnswer(!isLeftCorrect);
     }
 
@@ -231,5 +243,31 @@ public class GameManager : MonoBehaviour
         {
             ShowNextQuestion();
         }
+    }
+
+    public void PauseGame()
+    {
+        if (isPaused) {
+            return;
+        }
+        isPaused = true;
+        Time.timeScale = 0f;
+        if (timerCoroutine != null)
+        {
+            StopCoroutine(timerCoroutine);
+        }
+        pauseaPanel.SetActive(true);
+    }
+
+    public void ResumeGame()
+    {
+        if(!isPaused)
+        {
+            return;
+        }
+        isPaused = false;
+        Time.timeScale = 1f;
+        pauseaPanel.SetActive(false);
+        timerCoroutine = StartCoroutine(QuestionTimer());
     }
 }

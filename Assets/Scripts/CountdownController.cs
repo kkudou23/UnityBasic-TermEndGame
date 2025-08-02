@@ -1,3 +1,4 @@
+using naichilab.EasySoundPlayer.Scripts;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -19,12 +20,11 @@ public class CountdownController : MonoBehaviour
 
         while (currentTime > 0)
         {
+            SePlayer.Instance.Play(0);
             countdownText.text = Mathf.Ceil(currentTime).ToString();
             yield return new WaitForSeconds(1f);
             currentTime -= 1f;
         }
-
-        yield return new WaitForSeconds(0.5f);
 
         SceneManager.LoadScene("GameScene");
     }
