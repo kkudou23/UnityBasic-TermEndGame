@@ -24,7 +24,11 @@ public class ResultManager : MonoBehaviour
 
         finalScoreText.text = $"{ResultData.correctScore + ResultData.bonusScore} P";
 
-        if (ResultData.playTime < 10f)
+        if (ResultData.correctCountTotal == 0)
+        {
+            messageText.text = "ぜんもん ふせいかい じゃ ボーナスは ナシ じゃ";
+        }
+        else if (ResultData.playTime < 10f)
         {
             messageText.text = "じゅう びょう いないに クリア";
         }

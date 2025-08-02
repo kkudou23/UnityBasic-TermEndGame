@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI rightButtonText;
     public TextMeshProUGUI questionNumberText;
     public Slider timeLimitSlider;
-    public GameObject pauseaPanel;
+    public GameObject pausePanel;
 
     public QuestionDataList questionDataList;
 
@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     private int currentQuestionIndex = 0;
     private int[] difficultyCount = new int[5];
     private int[] correctCount = new int[5];
+    private int correctCountTotal;
     private bool isLeftCorrect;
     private int questionCount;
 
@@ -51,6 +52,12 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        if (questionDataList == null || questionDataList.questions == null || questionDataList.questions.Count == 0)
+        {
+            selectedQuestions = new List<QuestionData>();
+            return;
+        }
+
         startTime = Time.time;
 
         if (!GameSettings.isEndlessMode)
@@ -69,7 +76,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if(isPaused)
+        if (isPaused)
         {
             return;
         }
@@ -86,22 +93,27 @@ public class GameManager : MonoBehaviour
 
     public void LeftButtonSelected()
     {
+        if (selectedQuestions == null || currentQuestionIndex >= selectedQuestions.Count) return;
         CheckAnswer(isLeftCorrect);
     }
 
     public void RightButtonSelected()
     {
+        if (selectedQuestions == null || currentQuestionIndex >= selectedQuestions.Count) return;
         CheckAnswer(!isLeftCorrect);
     }
 
     void CheckAnswer(bool isCorrect)
     {
+        if (selectedQuestions == null || currentQuestionIndex >= selectedQuestions.Count) return;
+
         var currentQuestion = selectedQuestions[currentQuestionIndex];
         if (isCorrect)
         {
             SePlayer.Instance.Play(0);
             score += (currentQuestion.difficulty + 1) * 100;
             correctCount[currentQuestion.difficulty]++;
+            correctCountTotal++;
         }
         else
         {
@@ -118,7 +130,10 @@ public class GameManager : MonoBehaviour
 
     void ShowNextQuestion()
     {
-        timeLimitSlider.value = 1f;
+        if (timeLimitSlider != null)
+        {
+            timeLimitSlider.value = 1f;
+        }
         elapsedTime = 0f;
 
         timerCancellationTokenSource?.Cancel();
@@ -140,50 +155,64 @@ public class GameManager : MonoBehaviour
         }
 
         var question = selectedQuestions[currentQuestionIndex];
-        questionText.text = question.questionText;
+        if (questionText != null)
+        {
+            questionText.text = question.questionText;
+        }
 
         difficultyCount[question.difficulty]++;
 
-        int randomLeftRight = UnityEngine.Random.Range(0, 2);
-        if (randomLeftRight == 0)
+        if (leftButtonText != null && rightButtonText != null)
         {
-            leftButtonText.text = question.firstOption;
-            rightButtonText.text = question.secondOption;
-            isLeftCorrect = (question.correctAnswer == question.firstOption);
-        }
-        else
-        {
-            leftButtonText.text = question.secondOption;
-            rightButtonText.text = question.firstOption;
-            isLeftCorrect = (question.correctAnswer == question.secondOption);
+            int randomLeftRight = UnityEngine.Random.Range(0, 2);
+            if (randomLeftRight == 0)
+            {
+                leftButtonText.text = question.firstOption;
+                rightButtonText.text = question.secondOption;
+                isLeftCorrect = (question.correctAnswer == question.firstOption);
+            }
+            else
+            {
+                leftButtonText.text = question.secondOption;
+                rightButtonText.text = question.firstOption;
+                isLeftCorrect = (question.correctAnswer == question.secondOption);
+            }
         }
 
-        if (GameSettings.isEndlessMode)
+        if (questionNumberText != null)
         {
-            questionNumberText.text = (currentQuestionIndex + 1).ToString();
-        }
-        else
-        {
-            questionNumberText.text = $"{currentQuestionIndex + 1} / {questionCount}";
+            if (GameSettings.isEndlessMode)
+            {
+                questionNumberText.text = (currentQuestionIndex + 1).ToString();
+            }
+            else
+            {
+                questionNumberText.text = $"{currentQuestionIndex + 1} / {questionCount}";
+            }
         }
 
         timeLimit -= 0.1f;
-        if(GameSettings.isEndlessMode && timeLimit < minTimeLimit) {
+        if (GameSettings.isEndlessMode && timeLimit < minTimeLimit)
+        {
             timeLimit = minTimeLimit;
         }
     }
 
     List<QuestionData> GetRandomQuestions(int count)
     {
-        var shuffledQuestions = new List<QuestionData>(questionDataList.questions);
+        var shuffledQuestions = new List<QuestionData>();
+        if (questionDataList != null)
+        {
+            shuffledQuestions = new List<QuestionData>(questionDataList.questions);
+        }
 
         for (int i = 0; i < shuffledQuestions.Count; i++)
-        {
-            int randomIndex = UnityEngine.Random.Range(i, shuffledQuestions.Count);
-            var tmp = shuffledQuestions[i];
-            shuffledQuestions[i] = shuffledQuestions[randomIndex];
-            shuffledQuestions[randomIndex] = tmp;
-        }
+            {
+                int randomIndex = UnityEngine.Random.Range(i, shuffledQuestions.Count);
+                var tmp = shuffledQuestions[i];
+                shuffledQuestions[i] = shuffledQuestions[randomIndex];
+                shuffledQuestions[randomIndex] = tmp;
+            }
 
         if (count > shuffledQuestions.Count)
         {
@@ -197,26 +226,31 @@ public class GameManager : MonoBehaviour
     {
         ResultData.playTime = Time.time - startTime;
 
-        if (!GameSettings.isEndlessMode)
+        if (ResultData.correctCountTotal != 0)
         {
-            float maxTime = 30f;
-            bonus = Mathf.Max(0, (maxTime - ResultData.playTime)) * 10;
-            ResultData.bonusScore = Mathf.RoundToInt(bonus);
-        }
-        else
-        {
-            float survivalTime = ResultData.playTime;
-            bonus = survivalTime * 10;
-            ResultData.bonusScore = Mathf.RoundToInt(bonus);
+            if (!GameSettings.isEndlessMode)
+            {
+                float maxTime = 30f;
+                bonus = Mathf.Max(0, (maxTime - ResultData.playTime)) * 10;
+                ResultData.bonusScore = Mathf.RoundToInt(bonus);
+            }
+            else
+            {
+                float survivalTime = ResultData.playTime;
+                bonus = survivalTime * 10;
+                ResultData.bonusScore = Mathf.RoundToInt(bonus);
+            }
         }
 
         for (int i = 0; i < difficultyCount.Length; i++)
         {
             ResultData.difficultyCount[i] = difficultyCount[i];
             ResultData.correctCount[i] = correctCount[i];
+            ResultData.correctCountTotal = correctCountTotal;
         }
 
-        if (lifePoint == 0) {
+        if (lifePoint == 0)
+        {
             ResultData.isGameOver = true;
         }
 
@@ -224,7 +258,8 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("ResultScene");
     }
 
-    private async UniTask QuestionTimer() {
+    private async UniTask QuestionTimer()
+    {
         timerCancellationTokenSource = new CancellationTokenSource();
         CancellationToken token = timerCancellationTokenSource.Token;
 
@@ -239,8 +274,11 @@ public class GameManager : MonoBehaviour
                 }
 
                 elapsedTime += Time.deltaTime;
-                timeLimitSlider.value = 1f - (elapsedTime / timeLimit);
-                
+                if(timeLimitSlider != null)
+                {
+                    timeLimitSlider.value = 1f - (elapsedTime / timeLimit);
+                }
+
                 await UniTask.Yield(PlayerLoopTiming.Update, token);
             }
         }
@@ -250,7 +288,7 @@ public class GameManager : MonoBehaviour
         }
 
         lifePoint--;
-        if (lifePoint >= 0 && lifePoint < lifeArray.Length)
+        if (lifeArray != null && lifePoint >= 0 && lifePoint < lifeArray.Length)
         {
             lifeArray[lifePoint].SetActive(false);
         }
@@ -269,24 +307,25 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
-        if (isPaused) {
+        if (isPaused)
+        {
             return;
         }
         isPaused = true;
         Time.timeScale = 0f;
-        pauseaPanel.SetActive(true);
+        pausePanel.SetActive(true);
         SePlayer.Instance.Play(2);
     }
 
     public void ResumeGame()
     {
-        if(!isPaused)
+        if (!isPaused)
         {
             return;
         }
         isPaused = false;
         Time.timeScale = 1f;
-        pauseaPanel.SetActive(false);
+        pausePanel.SetActive(false);
         SePlayer.Instance.Play(2);
     }
     private void OnDestroy()

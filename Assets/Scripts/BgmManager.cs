@@ -3,10 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class BgmManager : MonoBehaviour
 {
-    void Start()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
+    //void Start()
+    //{
+    //    DontDestroyOnLoad(gameObject);
+    //}
 
     private void Update()
     {
