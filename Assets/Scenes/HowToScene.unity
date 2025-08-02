@@ -177,12 +177,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5917604986509176631, guid: fb9042acf9b6c402ca5af41fd9c4d09b, type: 3}
       propertyPath: SeList.Array.size
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5917604986509176631, guid: fb9042acf9b6c402ca5af41fd9c4d09b, type: 3}
       propertyPath: 'SeList.Array.data[0]'
       value: 
-      objectReference: {fileID: 8300000, guid: c18546b64df30444aabc2aa7495b321d, type: 3}
+      objectReference: {fileID: 8300000, guid: 2329436a66bfec64f973ede4262c3e08, type: 3}
+    - target: {fileID: 5917604986509176631, guid: fb9042acf9b6c402ca5af41fd9c4d09b, type: 3}
+      propertyPath: 'SeList.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 88d04093bdd56c94d94a2467cfc98ebd, type: 3}
+    - target: {fileID: 5917604986509176631, guid: fb9042acf9b6c402ca5af41fd9c4d09b, type: 3}
+      propertyPath: 'SeList.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 51c76e9335e626e46aa114c4e23cc732, type: 3}
+    - target: {fileID: 5917604986509176631, guid: fb9042acf9b6c402ca5af41fd9c4d09b, type: 3}
+      propertyPath: 'SeList.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 40bed0db0d7aeba48b60310ed403cdc0, type: 3}
     - target: {fileID: 5917604986509176631, guid: fb9042acf9b6c402ca5af41fd9c4d09b, type: 3}
       propertyPath: DontDestroyOnLoadOnAwake
       value: 1
@@ -192,17 +204,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb9042acf9b6c402ca5af41fd9c4d09b, type: 3}
---- !u!114 &226143526 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5917604986509176631, guid: fb9042acf9b6c402ca5af41fd9c4d09b, type: 3}
-  m_PrefabInstance: {fileID: 226143525}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ba67a6d5e6a1455faa996db69a44325, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &468641281
 GameObject:
   m_ObjectHideFlags: 0
@@ -1125,8 +1126,8 @@ RectTransform:
   - {fileID: 468641282}
   - {fileID: 1547890463}
   - {fileID: 606517828}
-  - {fileID: 1922812041}
   - {fileID: 1278822066}
+  - {fileID: 1922812041}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1296,18 +1297,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 226143526}
-        m_TargetAssemblyTypeName: naichilab.EasySoundPlayer.Scripts.SePlayer, naichilab.EasySoundPlayer
-        m_MethodName: Play
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1458387462}
         m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
         m_MethodName: LoadModeSelectScene

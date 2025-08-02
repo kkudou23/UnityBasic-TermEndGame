@@ -1610,12 +1610,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5917604986509176631, guid: fb9042acf9b6c402ca5af41fd9c4d09b, type: 3}
       propertyPath: SeList.Array.size
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5917604986509176631, guid: fb9042acf9b6c402ca5af41fd9c4d09b, type: 3}
       propertyPath: 'SeList.Array.data[0]'
       value: 
-      objectReference: {fileID: 8300000, guid: c18546b64df30444aabc2aa7495b321d, type: 3}
+      objectReference: {fileID: 8300000, guid: 2329436a66bfec64f973ede4262c3e08, type: 3}
+    - target: {fileID: 5917604986509176631, guid: fb9042acf9b6c402ca5af41fd9c4d09b, type: 3}
+      propertyPath: 'SeList.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 88d04093bdd56c94d94a2467cfc98ebd, type: 3}
+    - target: {fileID: 5917604986509176631, guid: fb9042acf9b6c402ca5af41fd9c4d09b, type: 3}
+      propertyPath: 'SeList.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 51c76e9335e626e46aa114c4e23cc732, type: 3}
+    - target: {fileID: 5917604986509176631, guid: fb9042acf9b6c402ca5af41fd9c4d09b, type: 3}
+      propertyPath: 'SeList.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 40bed0db0d7aeba48b60310ed403cdc0, type: 3}
     - target: {fileID: 5917604986509176631, guid: fb9042acf9b6c402ca5af41fd9c4d09b, type: 3}
       propertyPath: DontDestroyOnLoadOnAwake
       value: 1

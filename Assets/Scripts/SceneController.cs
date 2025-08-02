@@ -10,10 +10,12 @@ public class SceneController : MonoBehaviour {
     }
 
     public void LoadHowToScene() {
+        SePlayer.Instance.Play(0);
         SceneManager.LoadScene("HowToScene");
     }
 
     public void LoadModeSelectScene() {
+        SePlayer.Instance.Play(0);
         SceneManager.LoadScene("ModeSelectScene");
     }
 

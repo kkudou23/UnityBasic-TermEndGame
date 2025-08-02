@@ -1,4 +1,6 @@
+using Cysharp.Threading.Tasks;
 using naichilab.EasySoundPlayer.Scripts;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -39,6 +41,8 @@ public class GameManager : MonoBehaviour
     private float bonus = 0;
 
     private bool isPaused = false;
+    private CancellationTokenSource timerCancellationTokenSource;
+    private float elapsedTime = 0f;
 
     public static class GameSettings
     {
@@ -82,13 +86,11 @@ public class GameManager : MonoBehaviour
 
     public void LeftButtonSelected()
     {
-        SePlayer.Instance.Play(0);
         CheckAnswer(isLeftCorrect);
     }
 
     public void RightButtonSelected()
     {
-        SePlayer.Instance.Play(0);
         CheckAnswer(!isLeftCorrect);
     }
 
@@ -97,11 +99,13 @@ public class GameManager : MonoBehaviour
         var currentQuestion = selectedQuestions[currentQuestionIndex];
         if (isCorrect)
         {
+            SePlayer.Instance.Play(0);
             score += (currentQuestion.difficulty + 1) * 100;
             correctCount[currentQuestion.difficulty]++;
         }
         else
         {
+            SePlayer.Instance.Play(1);
             lifePoint--;
             if (lifePoint >= 0 && lifePoint < lifeArray.Length)
             {
@@ -115,6 +119,13 @@ public class GameManager : MonoBehaviour
     void ShowNextQuestion()
     {
         timeLimitSlider.value = 1f;
+        elapsedTime = 0f;
+
+        timerCancellationTokenSource?.Cancel();
+        timerCancellationTokenSource?.Dispose();
+
+        timerCancellationTokenSource = new CancellationTokenSource();
+        QuestionTimer().Forget();
 
         if (lifePoint == 0 || (!GameSettings.isEndlessMode && currentQuestionIndex >= questionCount))
         {
@@ -133,7 +144,7 @@ public class GameManager : MonoBehaviour
 
         difficultyCount[question.difficulty]++;
 
-        int randomLeftRight = Random.Range(0, 2);
+        int randomLeftRight = UnityEngine.Random.Range(0, 2);
         if (randomLeftRight == 0)
         {
             leftButtonText.text = question.firstOption;
@@ -156,12 +167,6 @@ public class GameManager : MonoBehaviour
             questionNumberText.text = $"{currentQuestionIndex + 1} / {questionCount}";
         }
 
-        if (timerCoroutine != null)
-        {
-            StopCoroutine(timerCoroutine);
-        }
-        timerCoroutine = StartCoroutine(QuestionTimer());
-
         timeLimit -= 0.1f;
         if(GameSettings.isEndlessMode && timeLimit < minTimeLimit) {
             timeLimit = minTimeLimit;
@@ -174,7 +179,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < shuffledQuestions.Count; i++)
         {
-            int randomIndex = Random.Range(i, shuffledQuestions.Count);
+            int randomIndex = UnityEngine.Random.Range(i, shuffledQuestions.Count);
             var tmp = shuffledQuestions[i];
             shuffledQuestions[i] = shuffledQuestions[randomIndex];
             shuffledQuestions[randomIndex] = tmp;
@@ -219,12 +224,29 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("ResultScene");
     }
 
-    IEnumerator QuestionTimer() {
-        float elapsed = 0f;
-        while (elapsed < timeLimit) {
-            elapsed += Time.deltaTime;
-            timeLimitSlider.value = 1f - (elapsed / timeLimit);
-            yield return null;
+    private async UniTask QuestionTimer() {
+        timerCancellationTokenSource = new CancellationTokenSource();
+        CancellationToken token = timerCancellationTokenSource.Token;
+
+        try
+        {
+            while (elapsedTime < timeLimit)
+            {
+                if (isPaused)
+                {
+                    await UniTask.Yield(PlayerLoopTiming.Update, token);
+                    continue;
+                }
+
+                elapsedTime += Time.deltaTime;
+                timeLimitSlider.value = 1f - (elapsedTime / timeLimit);
+                
+                await UniTask.Yield(PlayerLoopTiming.Update, token);
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            return;
         }
 
         lifePoint--;
@@ -252,11 +274,8 @@ public class GameManager : MonoBehaviour
         }
         isPaused = true;
         Time.timeScale = 0f;
-        if (timerCoroutine != null)
-        {
-            StopCoroutine(timerCoroutine);
-        }
         pauseaPanel.SetActive(true);
+        SePlayer.Instance.Play(2);
     }
 
     public void ResumeGame()
@@ -268,6 +287,11 @@ public class GameManager : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1f;
         pauseaPanel.SetActive(false);
-        timerCoroutine = StartCoroutine(QuestionTimer());
+        SePlayer.Instance.Play(2);
+    }
+    private void OnDestroy()
+    {
+        timerCancellationTokenSource?.Cancel();
+        timerCancellationTokenSource?.Dispose();
     }
 }

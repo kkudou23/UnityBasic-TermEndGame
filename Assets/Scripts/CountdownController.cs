@@ -20,7 +20,7 @@ public class CountdownController : MonoBehaviour
 
         while (currentTime > 0)
         {
-            SePlayer.Instance.Play(0);
+            SePlayer.Instance.Play(3);
             countdownText.text = Mathf.Ceil(currentTime).ToString();
             yield return new WaitForSeconds(1f);
             currentTime -= 1f;
