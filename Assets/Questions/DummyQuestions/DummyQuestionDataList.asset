@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3731287d619f5274d8520576691d67c0, type: 3}
-  m_Name: New Question Data List
+  m_Name: DummyQuestionDataList
   m_EditorClassIdentifier: 
   questions:
   - {fileID: 11400000, guid: 74bf5d059d4d1ad49972e2a93ebe6d53, type: 2}

@@ -372,9 +372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   questionText: {fileID: 0}
-  leftButton: {fileID: 0}
   leftButtonText: {fileID: 0}
-  rightButton: {fileID: 0}
   rightButtonText: {fileID: 0}
   questionNumberText: {fileID: 0}
   timeLimitSlider: {fileID: 0}
@@ -2163,7 +2161,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 5000 P
+  m_text: 3500 P
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6d47a959b5ea86a4b9611e9837be0481, type: 2}
   m_sharedMaterial: {fileID: -8645321730553576498, guid: 6d47a959b5ea86a4b9611e9837be0481, type: 2}

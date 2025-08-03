@@ -635,15 +635,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   questionText: {fileID: 82568804}
-  leftButton: {fileID: 67948621}
   leftButtonText: {fileID: 1310447474}
-  rightButton: {fileID: 741807170}
   rightButtonText: {fileID: 900896756}
   questionNumberText: {fileID: 682621865}
   timeLimitSlider: {fileID: 1713862249}
   pausePanel: {fileID: 305897186}
   birdImage: {fileID: 57502030}
-  questionDataList: {fileID: 11400000, guid: a2c12af1f11cb984a84f69bee4a891de, type: 2}
+  questionDataList: {fileID: 11400000, guid: f4c6a5dc9372daa4e925058d49a3eec2, type: 2}
   lifeArray:
   - {fileID: 1775953977}
   - {fileID: 1853843278}
@@ -2754,7 +2752,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u3072\u3060\u308A\n"
+  m_text: "\u3072\u3060\u308A"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6d47a959b5ea86a4b9611e9837be0481, type: 2}
   m_sharedMaterial: {fileID: -8645321730553576498, guid: 6d47a959b5ea86a4b9611e9837be0481, type: 2}

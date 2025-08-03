@@ -12,9 +12,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI questionText;
-    public GameObject leftButton;
     public TextMeshProUGUI leftButtonText;
-    public GameObject rightButton;
     public TextMeshProUGUI rightButtonText;
     public TextMeshProUGUI questionNumberText;
     public Slider timeLimitSlider;
@@ -63,7 +61,7 @@ public class GameManager : MonoBehaviour
 
         if (!GameSettings.isEndlessMode)
         {
-            questionCount = 3;
+            questionCount = 20;
             selectedQuestions = GetRandomQuestions(questionCount);
         }
         else
@@ -178,15 +176,15 @@ public class GameManager : MonoBehaviour
             int randomLeftRight = UnityEngine.Random.Range(0, 2);
             if (randomLeftRight == 0)
             {
-                leftButtonText.text = question.firstOption;
-                rightButtonText.text = question.secondOption;
-                isLeftCorrect = (question.correctAnswer == question.firstOption);
+                leftButtonText.text = question.correctOption;
+                rightButtonText.text = question.wrongOption;
+                isLeftCorrect = true;
             }
             else
             {
-                leftButtonText.text = question.secondOption;
-                rightButtonText.text = question.firstOption;
-                isLeftCorrect = (question.correctAnswer == question.secondOption);
+                leftButtonText.text = question.wrongOption;
+                rightButtonText.text = question.correctOption;
+                isLeftCorrect = false;
             }
         }
 
@@ -239,35 +237,34 @@ public class GameManager : MonoBehaviour
     {
         ResultData.playTime = Time.time - startTime;
 
-        if (ResultData.correctCountTotal != 0)
-        {
-            if (!GameSettings.isEndlessMode)
-            {
-                float maxTime = 30f;
-                bonus = Mathf.Max(0, (maxTime - ResultData.playTime)) * 10;
-                ResultData.bonusScore = Mathf.RoundToInt(bonus);
-            }
-            else
-            {
-                float survivalTime = ResultData.playTime;
-                bonus = survivalTime * 10;
-                ResultData.bonusScore = Mathf.RoundToInt(bonus);
-            }
-        }
-
         for (int i = 0; i < difficultyCount.Length; i++)
         {
             ResultData.difficultyCount[i] = difficultyCount[i];
             ResultData.correctCount[i] = correctCount[i];
-            ResultData.correctCountTotal = correctCountTotal;
         }
+        ResultData.correctCountTotal = correctCountTotal;
+
+        if (ResultData.correctCountTotal != 0)
+        {
+            if (!GameSettings.isEndlessMode)
+            {
+                float maxTime = 60f;
+                bonus = Mathf.Max(0, (maxTime - ResultData.playTime)) * 10;
+            }
+            else
+            {
+                bonus = ResultData.correctCountTotal * 50f;
+            }
+            ResultData.bonusScore = Mathf.RoundToInt(bonus);
+        }
+
+        ResultData.correctScore = score;
 
         if (lifePoint == 0)
         {
             ResultData.isGameOver = true;
         }
 
-        ResultData.correctScore = score;
         SceneManager.LoadScene("ResultScene");
     }
 
@@ -299,6 +296,8 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
+
+        SePlayer.Instance.Play(1);
 
         for (int i = 0; i < lifePoint; i++)
         {

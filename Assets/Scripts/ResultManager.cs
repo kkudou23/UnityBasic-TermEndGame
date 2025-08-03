@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using static GameManager;
 
 public class ResultManager : MonoBehaviour
 {
@@ -19,8 +20,17 @@ public class ResultManager : MonoBehaviour
             resultText.text += $"{((i + 1) * 100) * ResultData.correctCount[i]} P\n";
         }
 
-        systemText.text += $"クリアタイム ボーナス";
-        resultText.text += $"{ResultData.playTime:F2} びょう = {ResultData.bonusScore} P";
+        if (!GameSettings.isEndlessMode)
+        {
+            systemText.text += $"クリアタイム ボーナス";
+            resultText.text += $"{ResultData.playTime:F2} びょう = {ResultData.bonusScore} P";
+        }
+        else
+        {
+            systemText.text += $"せいかいすう ボーナス";
+            resultText.text += $"{ResultData.correctCountTotal} もん せいかい = {ResultData.bonusScore} P";
+        }
+
 
         finalScoreText.text = $"{ResultData.correctScore + ResultData.bonusScore} P";
 

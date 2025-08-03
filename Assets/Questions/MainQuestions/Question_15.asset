@@ -10,10 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd590e86f7d7081448b8142940ea52f8, type: 3}
-  m_Name: QD1
+  m_Name: Question_15
   m_EditorClassIdentifier: 
-  questionText: "\u30C6\u30B9\u30C8\u3082\u3093\u3060\u30441"
-  firstOption: "\u305B\u3044\u304B\u3044"
-  secondOption: "\u307E\u3061\u304C\u3044"
-  correctAnswer: "\u305B\u3044\u304B\u3044"
-  difficulty: 0
+  questionText: "\u304A\u304A\u304D\u3044 \u306E\u306F \u3069\u3063\u3061\uFF1F"
+  correctOption: 1/2
+  wrongOption: 1/3
+  difficulty: 1
