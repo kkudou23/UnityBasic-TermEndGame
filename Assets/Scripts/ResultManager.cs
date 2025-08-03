@@ -7,6 +7,7 @@ public class ResultManager : MonoBehaviour
     public TextMeshProUGUI systemText;
     public TextMeshProUGUI resultText;
     public TextMeshProUGUI finalScoreText;
+    public TextMeshProUGUI highScoreText;
     public TextMeshProUGUI messageText;
 
     void Start()
@@ -31,8 +32,23 @@ public class ResultManager : MonoBehaviour
             resultText.text += $"{ResultData.correctCountTotal} もん せいかい = {ResultData.bonusScore} P";
         }
 
+        int finalScore = ResultData.correctScore + ResultData.bonusScore;
 
-        finalScoreText.text = $"{ResultData.correctScore + ResultData.bonusScore} P";
+        string highScoreKey = GameSettings.isEndlessMode ? "HIGH_SCORE_ENDLESS" : "HIGH_SCORE";
+
+        int highScore = PlayerPrefs.GetInt(highScoreKey, 0);
+        finalScoreText.text = $"{finalScore} P";
+
+        if(finalScore > highScore)
+        {
+            PlayerPrefs.SetInt(highScoreKey, finalScore);
+            PlayerPrefs.Save();
+            highScoreText.text = "ハイスコア\nこうしん！";
+        }
+        else
+        {
+            highScoreText.text = $"ハイスコア\n{highScore} P";
+        }
 
         if (ResultData.correctCountTotal == 0)
         {

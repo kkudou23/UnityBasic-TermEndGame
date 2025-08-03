@@ -51,6 +51,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        //PlayerPrefs.DeleteAll();
+
+
         if (questionDataList == null || questionDataList.questions == null || questionDataList.questions.Count == 0)
         {
             selectedQuestions = new List<QuestionData>();
