@@ -253,6 +253,11 @@ public class GameManager : MonoBehaviour
             {
                 float maxTime = 60f;
                 bonus = Mathf.Max(0, (maxTime - ResultData.playTime)) * 10;
+
+                if (correctCountTotal == 20)
+                {
+                    bonus += 1000;
+                }
             }
             else
             {

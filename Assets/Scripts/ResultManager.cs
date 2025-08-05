@@ -1,3 +1,7 @@
+using Cysharp.Threading.Tasks;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using static GameManager;
@@ -10,10 +14,10 @@ public class ResultManager : MonoBehaviour
     public TextMeshProUGUI highScoreText;
     public TextMeshProUGUI messageText;
 
-    void Start()
+    async void Start()
     {
         systemText.text = "";
-        resultText.text = "";
+        resultText.text = "\n";
 
         for (int i = 0; i < ResultData.difficultyCount.Length; i++)
         {
@@ -23,8 +27,17 @@ public class ResultManager : MonoBehaviour
 
         if (!GameSettings.isEndlessMode)
         {
-            systemText.text += $"クリアタイム ボーナス";
-            resultText.text += $"{ResultData.playTime:F2} びょう = {ResultData.bonusScore} P";
+            if (ResultData.correctCountTotal == 20)
+            {
+                systemText.text += $"クリアタイム ボーナス\n";
+                resultText.text += $"{ResultData.playTime:F2} びょう = {ResultData.bonusScore - 1000} P\n";
+                systemText.text += $"ぜんもんせいかい ボーナス\n";
+                resultText.text += $"1000 P\n";
+            } else
+            {
+                systemText.text += $"クリアタイム ボーナス\n";
+                resultText.text += $"{ResultData.playTime:F2} びょう = {ResultData.bonusScore} P\n";
+            }
         }
         else
         {
@@ -50,25 +63,67 @@ public class ResultManager : MonoBehaviour
             highScoreText.text = $"ハイスコア\n{highScore} P";
         }
 
-        if (ResultData.correctCountTotal == 0)
+        messageText.text = GetResultMessage();
+
+        if (GameSettings.isEndlessMode && finalScore >= 25000)
         {
-            messageText.text = "ぜんもん ふせいかい じゃ ボーナスは ナシ じゃ";
+            var token = this.GetCancellationTokenOnDestroy();
+
+            await UniTask.Delay(TimeSpan.FromMinutes(5), cancellationToken: token);
+            messageText.text = "こんな げーむを あそんでくれて ありがとう\n...ほんとに まって くれるとは";
         }
-        else if (ResultData.playTime < 10f)
+    }
+
+    string GetResultMessage()
+    {
+        return GameSettings.isEndlessMode ? GetEndlessModeMessage() : GetNormalModeMessage();
+    }
+
+    string GetEndlessModeMessage()
+    {
+        var messageConditions = new List<(Func<bool> condition, string message)>
         {
-            messageText.text = "じゅう びょう いないに クリア";
-        }
-        else if (ResultData.playTime < 30f)
+            (() => ResultData.correctCountTotal == 0, "ぜんもん ふせいかい じゃ ボーナスは ナシ"),
+            (() => ResultData.correctCountTotal <= 3, "もっと がんばれる はず"),
+            (() => ResultData.correctCountTotal <= 5, "まだまだ"),
+            (() => ResultData.correctCountTotal <= 10, "ぼちぼち…"),
+            (() => ResultData.correctCountTotal <= 20, "いい かんじ"),
+            (() => ResultData.correctScore + ResultData.bonusScore <= 8000, "わるく ないね"),
+            (() => ResultData.correctScore + ResultData.bonusScore <= 10000, "なかなか いいね"),
+            (() => ResultData.correctScore + ResultData.bonusScore <= 15000, "かなり いいね"),
+            (() => ResultData.correctScore + ResultData.bonusScore <= 20000, "けっこう すごいね"),
+            (() => ResultData.correctScore + ResultData.bonusScore <= 24999, "もう ひとこえ！"),
+            (() => ResultData.correctScore + ResultData.bonusScore >= 25000, "えらいっ"),
+            (() => true, "このメッセージが みれるのは おかしいよ"),
+        };
+
+        foreach (var (condition, message) in messageConditions)
         {
-            messageText.text = "さんじゅう びょう いないに クリア";
+            if (condition()) return message;
         }
-        else if (ResultData.playTime < 60f)
+
+        return "";
+    }
+
+    string GetNormalModeMessage()
+    {
+        var messageConditions = new List<(Func<bool> condition, string message)>
         {
-            messageText.text = "ろくじゅう びょう いないに クリア";
-        }
-        else
+            (() => ResultData.correctCountTotal == 0, "ぜんもん ふせいかい じゃ ボーナスは ナシ"),
+            (() => ResultData.correctCountTotal <= 3, "もっと がんばれる はず"),
+            (() => ResultData.correctCountTotal <= 5, "まだまだ"),
+            (() => ResultData.correctCountTotal <= 10, "ぼちぼち…"),
+            (() => ResultData.correctCountTotal <= 15, "もう ひとこえ！"),
+            (() => ResultData.correctCountTotal <= 19, "おしいっ"),
+            (() => ResultData.correctCountTotal == 20, "ぜんもん せいかい おめでとう！"),
+            (() => true, "このメッセージが みれるのは おかしいよ"),
+        };
+
+        foreach (var (condition, message) in messageConditions)
         {
-            messageText.text = "ろくじゅう びょう いじょう かかった";
+            if (condition()) return message;
         }
+
+        return "";
     }
 }

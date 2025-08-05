@@ -905,9 +905,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   questionText: {fileID: 0}
-  leftButton: {fileID: 0}
   leftButtonText: {fileID: 0}
-  rightButton: {fileID: 0}
   rightButtonText: {fileID: 0}
   questionNumberText: {fileID: 0}
   timeLimitSlider: {fileID: 0}
@@ -3333,5 +3331,5 @@ SceneRoots:
   - {fileID: 1905575399}
   - {fileID: 206002586}
   - {fileID: 279991374}
-  - {fileID: 860976048}
   - {fileID: 1088919225}
+  - {fileID: 860976048}

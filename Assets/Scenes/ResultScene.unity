@@ -1284,8 +1284,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 373, y: 112}
-  m_SizeDelta: {x: 500, y: 550}
+  m_AnchoredPosition: {x: 396, y: 130}
+  m_SizeDelta: {x: 500, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &577039581
 MonoBehaviour:
@@ -1310,7 +1310,7 @@ MonoBehaviour:
   m_text: "\u306A\u3093\u3044\u3069 1 (100 P) * 2\n\u306A\u3093\u3044\u3069 2 (200
     P) * 2\n\u306A\u3093\u3044\u3069 3 (300 P) * 2\n\u306A\u3093\u3044\u3069 4 (400
     P) * 2\n\u306A\u3093\u3044\u3069 5 (500 P) * 2\n\u30AF\u30EA\u30A2\u30BF\u30A4\u30E0
-    \u30DC\u30FC\u30CA\u30B9"
+    \u30DC\u30FC\u30CA\u30B9\n\u305C\u3093\u3082\u3093 \u305B\u3044\u304B\u3044 \u30DC\u30FC\u30CA\u30B9"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6d47a959b5ea86a4b9611e9837be0481, type: 2}
   m_sharedMaterial: {fileID: -8645321730553576498, guid: 6d47a959b5ea86a4b9611e9837be0481, type: 2}
@@ -1337,15 +1337,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 45
-  m_fontSizeBase: 45
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1965,8 +1965,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -43, y: 66}
-  m_SizeDelta: {x: 1200, y: 550}
+  m_AnchoredPosition: {x: -60, y: 130}
+  m_SizeDelta: {x: 1200, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &852217919
 MonoBehaviour:
@@ -1988,7 +1988,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "200 P\n400 P\n600 P\n800 P\n1000 P\n12.34 \u3073\u3087\u3046 = 500 P"
+  m_text: "\n200 P\n400 P\n600 P\n800 P\n1000 P\n12.34 \u3073\u3087\u3046 = 500 P\n1000
+    P"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6d47a959b5ea86a4b9611e9837be0481, type: 2}
   m_sharedMaterial: {fileID: -8645321730553576498, guid: 6d47a959b5ea86a4b9611e9837be0481, type: 2}
@@ -2015,15 +2016,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 45
-  m_fontSizeBase: 45
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 2
   m_HorizontalAlignment: 4
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
