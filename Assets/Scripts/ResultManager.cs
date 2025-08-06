@@ -21,7 +21,7 @@ public class ResultManager : MonoBehaviour
 
         for (int i = 0; i < ResultData.difficultyCount.Length; i++)
         {
-            systemText.text += $"なんいど {i + 1} ({(i+1) * 100} P) * {ResultData.correctCount[i]} P\n";
+            systemText.text += $"なんいど {i + 1} ({(i+1) * 100} P) * {ResultData.correctCount[i]} もん\n";
             resultText.text += $"{((i + 1) * 100) * ResultData.correctCount[i]} P\n";
         }
 
@@ -65,7 +65,7 @@ public class ResultManager : MonoBehaviour
 
         messageText.text = GetResultMessage();
 
-        if (GameSettings.isEndlessMode && finalScore >= 25000)
+        if (GameSettings.isEndlessMode && finalScore >= 22222)
         {
             var token = this.GetCancellationTokenOnDestroy();
 
@@ -91,9 +91,9 @@ public class ResultManager : MonoBehaviour
             (() => ResultData.correctScore + ResultData.bonusScore <= 8000, "わるく ないね"),
             (() => ResultData.correctScore + ResultData.bonusScore <= 10000, "なかなか いいね"),
             (() => ResultData.correctScore + ResultData.bonusScore <= 15000, "かなり いいね"),
-            (() => ResultData.correctScore + ResultData.bonusScore <= 20000, "けっこう すごいね"),
-            (() => ResultData.correctScore + ResultData.bonusScore <= 24999, "もう ひとこえ！"),
-            (() => ResultData.correctScore + ResultData.bonusScore >= 25000, "えらいっ"),
+            (() => ResultData.correctScore + ResultData.bonusScore <= 18000, "けっこう すごいね"),
+            (() => ResultData.correctScore + ResultData.bonusScore <= 20000, "もう ひとこえ！"),
+            (() => ResultData.correctScore + ResultData.bonusScore >= 22222, "えらいっ"),
             (() => true, "このメッセージが みれるのは おかしいよ"),
         };
 

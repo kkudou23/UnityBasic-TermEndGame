@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Question_19
   m_EditorClassIdentifier: 
   questionText: "\u307B\u3063\u304D\u3087\u304F \u306B \u3044\u308B\u306E\u306F \u3069\u3063\u3061\uFF1F"
-  correctOption: "\u30DB\u30C3\u30AD\u30E7\u30AF\u30B0\u30DE"
+  correctOption: "\u30DB\u30C3\u30AD\u30E7\u30AF\\n\u30B0\u30DE"
   wrongOption: "\u30DA\u30F3\u30AE\u30F3"
   difficulty: 1
