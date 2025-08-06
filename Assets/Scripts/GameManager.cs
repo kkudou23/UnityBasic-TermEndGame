@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public Slider timeLimitSlider;
     public GameObject pausePanel;
     public Image birdImage;
+    public TextMeshProUGUI pauseText;
 
     public QuestionDataList questionDataList;
 
@@ -69,6 +70,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            pauseText.text = "スコアが 22222 P を こえると…？";
             questionCount = questionDataList.questions.Count;
             selectedQuestions = GetRandomQuestions(questionCount);
         }
@@ -80,6 +82,10 @@ public class GameManager : MonoBehaviour
     {
         if (isPaused)
         {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                TogglePause();
+            }
             return;
         }
 
@@ -90,6 +96,14 @@ public class GameManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             RightButtonSelected();
+        }
+
+        if (SceneManager.GetActiveScene().name.Equals("GameScene"))
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                TogglePause();
+            }
         }
     }
 
@@ -357,6 +371,19 @@ public class GameManager : MonoBehaviour
         pausePanel.SetActive(false);
         SePlayer.Instance.Play(2);
     }
+
+    public void TogglePause()
+    {
+        if (isPaused)
+        {
+            ResumeGame();
+        }
+        else
+        {
+            PauseGame();
+        }
+    }
+
     private void OnDestroy()
     {
         timerCancellationTokenSource?.Cancel();

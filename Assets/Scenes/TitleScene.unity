@@ -1531,7 +1531,7 @@ PrefabInstance:
       objectReference: {fileID: 1585886872}
     - target: {fileID: 5917604986509176628, guid: fb9042acf9b6c402ca5af41fd9c4d09b, type: 3}
       propertyPath: CurrentVolume.value
-      value: 1
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 5917604986509176630, guid: fb9042acf9b6c402ca5af41fd9c4d09b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1754,8 +1754,8 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.29803923, g: 0.29803923, b: 0.29803923, a: 1}
-    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 1, g: 0.78431374, b: 0.19607843, a: 1}
     m_PressedColor: {r: 1, g: 0.65484786, b: 0.19607842, a: 1}
     m_SelectedColor: {r: 1, g: 0.78431374, b: 0.19607843, a: 1}
     m_DisabledColor: {r: 0.29803923, g: 0.29803923, b: 0.29803923, a: 1}
@@ -2281,8 +2281,8 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.29803923, g: 0.29803923, b: 0.29803923, a: 1}
-    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 1, g: 0.78431374, b: 0.19607843, a: 1}
     m_PressedColor: {r: 1, g: 0.654902, b: 0.19607843, a: 1}
     m_SelectedColor: {r: 1, g: 0.78431374, b: 0.19607843, a: 1}
     m_DisabledColor: {r: 0.29803923, g: 0.29803923, b: 0.29803923, a: 1}
@@ -2972,11 +2972,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
+  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -3091,7 +3091,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 853091874}
+  m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &1905575399

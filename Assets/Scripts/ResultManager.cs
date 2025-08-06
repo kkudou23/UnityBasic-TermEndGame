@@ -92,9 +92,9 @@ public class ResultManager : MonoBehaviour
             (() => ResultData.correctScore + ResultData.bonusScore <= 10000, "なかなか いいね"),
             (() => ResultData.correctScore + ResultData.bonusScore <= 15000, "かなり いいね"),
             (() => ResultData.correctScore + ResultData.bonusScore <= 18000, "けっこう すごいね"),
-            (() => ResultData.correctScore + ResultData.bonusScore <= 20000, "もう ひとこえ！"),
+            (() => ResultData.correctScore + ResultData.bonusScore <= 22221, "もう ひとこえ！"),
             (() => ResultData.correctScore + ResultData.bonusScore >= 22222, "えらいっ"),
-            (() => true, "このメッセージが みれるのは おかしいよ"),
+            (() => true, "このメッセージが みえるのは おかしいよ"),
         };
 
         foreach (var (condition, message) in messageConditions)
@@ -116,7 +116,7 @@ public class ResultManager : MonoBehaviour
             (() => ResultData.correctCountTotal <= 15, "もう ひとこえ！"),
             (() => ResultData.correctCountTotal <= 19, "おしいっ"),
             (() => ResultData.correctCountTotal == 20, "ぜんもん せいかい おめでとう！"),
-            (() => true, "このメッセージが みれるのは おかしいよ"),
+            (() => true, "このメッセージが みえるのは おかしいよ"),
         };
 
         foreach (var (condition, message) in messageConditions)

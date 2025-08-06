@@ -20,7 +20,19 @@ public class SceneController : MonoBehaviour {
     }
 
     private void Update() {
-        if (SceneManager.GetActiveScene().name.Equals("HowToScene"))
+        if (SceneManager.GetActiveScene().name.Equals("TitleScene"))
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                LoadModeSelectScene();
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                LoadHowToScene();
+            }
+        }
+
+        if (SceneManager.GetActiveScene().name.Equals("HowToScene") || SceneManager.GetActiveScene().name.Equals("ResultScene"))
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
