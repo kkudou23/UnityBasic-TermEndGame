@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using unityroom.Api;
 using static GameManager;
 
 public class ResultManager : MonoBehaviour
@@ -57,6 +58,15 @@ public class ResultManager : MonoBehaviour
             PlayerPrefs.SetInt(highScoreKey, finalScore);
             PlayerPrefs.Save();
             highScoreText.text = "ハイスコア\nこうしん！";
+
+            if (!GameSettings.isEndlessMode)
+            {
+                UnityroomApiClient.Instance.SendScore(1, finalScore, ScoreboardWriteMode.HighScoreDesc);
+            }
+            else
+            {
+                UnityroomApiClient.Instance.SendScore(2, finalScore, ScoreboardWriteMode.HighScoreDesc);
+            }
         }
         else
         {
@@ -65,7 +75,7 @@ public class ResultManager : MonoBehaviour
 
         messageText.text = GetResultMessage();
 
-        if (GameSettings.isEndlessMode && finalScore >= 22222)
+        if (GameSettings.isEndlessMode && finalScore >= 20000)
         {
             var token = this.GetCancellationTokenOnDestroy();
 
@@ -92,8 +102,8 @@ public class ResultManager : MonoBehaviour
             (() => ResultData.correctScore + ResultData.bonusScore <= 10000, "なかなか いいね"),
             (() => ResultData.correctScore + ResultData.bonusScore <= 15000, "かなり いいね"),
             (() => ResultData.correctScore + ResultData.bonusScore <= 18000, "けっこう すごいね"),
-            (() => ResultData.correctScore + ResultData.bonusScore <= 22221, "もう ひとこえ！"),
-            (() => ResultData.correctScore + ResultData.bonusScore >= 22222, "えらいっ"),
+            (() => ResultData.correctScore + ResultData.bonusScore <= 19999, "もう ひとこえ！"),
+            (() => ResultData.correctScore + ResultData.bonusScore >= 20000, "えらいっ"),
             (() => true, "このメッセージが みえるのは おかしいよ"),
         };
 
@@ -110,11 +120,11 @@ public class ResultManager : MonoBehaviour
         var messageConditions = new List<(Func<bool> condition, string message)>
         {
             (() => ResultData.correctCountTotal == 0, "ぜんもん ふせいかい じゃ ボーナスは ナシ"),
-            (() => ResultData.correctCountTotal <= 3, "もっと がんばれる はず"),
-            (() => ResultData.correctCountTotal <= 5, "まだまだ"),
-            (() => ResultData.correctCountTotal <= 10, "ぼちぼち…"),
-            (() => ResultData.correctCountTotal <= 15, "もう ひとこえ！"),
-            (() => ResultData.correctCountTotal <= 19, "おしいっ"),
+            (() => ResultData.correctCountTotal <= 3, ResultData.correctCountTotal + " もん せいかい\nもっと がんばれる はず"),
+            (() => ResultData.correctCountTotal <= 5, ResultData.correctCountTotal + " もん せいかい\nまだまだ"),
+            (() => ResultData.correctCountTotal <= 10, ResultData.correctCountTotal + " もん せいかい\nぼちぼち…"),
+            (() => ResultData.correctCountTotal <= 15, ResultData.correctCountTotal + " もん せいかい\nもう ひとこえ！"),
+            (() => ResultData.correctCountTotal <= 19, ResultData.correctCountTotal + " もん せいかい\nおしいっ"),
             (() => ResultData.correctCountTotal == 20, "ぜんもん せいかい おめでとう！"),
             (() => true, "このメッセージが みえるのは おかしいよ"),
         };

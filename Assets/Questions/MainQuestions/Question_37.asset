@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Question_37
   m_EditorClassIdentifier: 
   questionText: "\u307F\u305A \u306F \u3069\u3063\u3061\uFF1F"
-  correctOption: H2O
-  wrongOption: CO2
+  correctOption: H<size=70%>2<size=100%>O
+  wrongOption: CO<size=70%>2
   difficulty: 3

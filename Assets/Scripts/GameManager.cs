@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            pauseText.text = "スコアが 22222 P を こえると…？";
+            pauseText.text = "スコアが 20000 P を こえると…？";
             questionCount = questionDataList.questions.Count;
             selectedQuestions = GetRandomQuestions(questionCount);
         }
@@ -85,6 +85,12 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 TogglePause();
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                SePlayer.Instance.Play(0);
+                Time.timeScale = 1f;
+                SceneManager.LoadScene("ModeSelectScene");
             }
             return;
         }
@@ -261,7 +267,11 @@ public class GameManager : MonoBehaviour
         }
         ResultData.correctCountTotal = correctCountTotal;
 
-        if (ResultData.correctCountTotal != 0)
+        if (ResultData.correctCountTotal == 0)
+        {
+            bonus = 0;
+        }
+        else
         {
             if (!GameSettings.isEndlessMode)
             {
@@ -277,8 +287,9 @@ public class GameManager : MonoBehaviour
             {
                 bonus = ResultData.correctCountTotal * 50f;
             }
-            ResultData.bonusScore = Mathf.RoundToInt(bonus);
         }
+
+        ResultData.bonusScore = Mathf.RoundToInt(bonus);
 
         ResultData.correctScore = score;
 
